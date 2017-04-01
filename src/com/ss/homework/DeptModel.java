@@ -10,9 +10,9 @@ import javax.swing.table.AbstractTableModel;
 
 public class DeptModel extends AbstractTableModel{	
 	String driver="org.mariadb.jdbc.Driver";
-	String url="jdbc:mariadb://localhost:3306/ss_edu";
-	String user="root";
-	String password="";
+	String url="jdbc:mariadb://192.168.0.8:3306/ss_edu";
+	String user="ss_edu_test";
+	String password="13579";
 	
 	Connection con;
 	PreparedStatement pstmt;
@@ -41,9 +41,13 @@ public class DeptModel extends AbstractTableModel{
 				int total=rs.getRow();
 				rs.beforeFirst();
 				
-				data=new String[total][column.length];
-				int index=0;
+				data=new String[total+1][column.length];
 				
+				for (int i = 0; i < column.length; i++) {
+					data[0][i]=column[i];
+				}				
+				
+				int index=1;				
 				while (rs.next()) {
 					int deptno=rs.getInt("deptno");
 					String dname=rs.getString("dname");

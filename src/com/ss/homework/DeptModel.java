@@ -28,12 +28,12 @@ public class DeptModel extends AbstractTableModel{
 			System.out.println("肺靛己傍");
 			
 			//2. 立加
-			con=DriverManager.getConnection(url);
+			con=DriverManager.getConnection(url, user, password);
 			if (con!=null) {
 				System.out.println("立加己傍");
 				
 				//3. sql荐青
-				String sql="Select * from demp";				
+				String sql="Select * from dept";				
 				pstmt=con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				rs=pstmt.executeQuery();
 				

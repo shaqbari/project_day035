@@ -2,6 +2,7 @@ package com.ss.homework;
 
 import java.awt.BorderLayout;
 import java.awt.Choice;
+import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -9,30 +10,36 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableModel;
 
 public class TableSwitch extends JFrame implements ItemListener{
-	JPanel p;
+	JPanel p_west, p_center;
 	Choice choice;	
-	JTable table;
-	JScrollPane scroll;
+	JTextField txt;
+	JTable table;	
+	JScrollPane scroll;	
+	MyModel model;
+	String[] empCol={"ename",	 "job","mgr","hiredate", "sal", "comm", "deptno"};	
+	String[] deptCol={"deptno", "dname", "loc"};	
 	
 	public TableSwitch() {
-		p=new JPanel();
+		p_west=new JPanel();
+		p_center=new JPanel();
 		choice=new Choice();
-
-		table=new JTable(new DeptModel());
-		//table=new JTable(3, 4);
-		scroll=new JScrollPane(table);
 		
 		choice.add("▼목록선택");
 		choice.add("사원목록");
 		choice.add("부서목록");	
 		choice.addItemListener(this);
 		
-		p.add(choice);		
-		add(p, BorderLayout.WEST);
-		add(scroll);		
+		p_west.add(choice);		
+		add(p_west, BorderLayout.WEST);
+		add(p_center);			
+		
+		p_west.setPreferredSize(new Dimension(100, 500));
+		p_center.setPreferredSize(new Dimension(600, 500));
 		
 		setSize(700, 500);
 		setLocationRelativeTo(null);
@@ -40,22 +47,27 @@ public class TableSwitch extends JFrame implements ItemListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);		
 	}
 	
-	public void setEmpTable(){
-		System.out.println("사원선택?");
-		
-	}
-	
-	public void setDeptTable(){
-		System.out.println("부서선택?");
-	
+	public void setTable(String tableName, String[] columnName){
+		p_center.removeAll();
+		model=new MyModel(tableName, columnName);
+		table=new JTable(model);		
+		scroll=new JScrollPane(table);
+		p_center.add(scroll);
+		p_center.updateUI();		
 	}
 	
 	public void itemStateChanged(ItemEvent e) {
 		int index=choice.getSelectedIndex();
-		if (index==1) {			
-			setEmpTable();
+		if(index==0){
+			System.out.println("목록선택?");
+			p_center.removeAll();
+			p_center.updateUI();
+		}else if	(index==1) {
+			System.out.println("사원선택?");
+			setTable("emp", empCol);
 		} else if(index==2){
-			setDeptTable();
+			System.out.println("부서선택?");
+			setTable("dept", deptCol);
 		}		
 	}
 

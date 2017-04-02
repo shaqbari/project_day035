@@ -16,8 +16,7 @@ import javax.swing.table.TableModel;
 
 public class TableSwitch extends JFrame implements ItemListener{
 	JPanel p_west, p_center;
-	Choice choice;	
-	JTextField txt;
+	Choice choice;		
 	JTable table;	
 	JScrollPane scroll;	
 	MyModel model;
